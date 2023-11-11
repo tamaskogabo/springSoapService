@@ -3,6 +3,7 @@ package com.codecool.myfirstsoapservice.service;
 import com.codecool.myfirstsoapservice.model.CountryModel;
 import com.codecool.myfirstsoapservice.repository.CountryJPARepository;
 import io.spring.guides.gs_producing_web_service.Country;
+import io.spring.guides.gs_producing_web_service.PostCountryRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +30,14 @@ public class CountryService {
             return countryToSend;
         }
         return null;
+    }
+
+    public void saveCountry(PostCountryRequest request) {
+        CountryModel toSave = new CountryModel();
+        toSave.setName(request.getName());
+        toSave.setCapital(request.getCapital());
+        toSave.setPopulation(request.getPopulation());
+        toSave.setCurrency(request.getCurrency());
+        repository.save(toSave);
     }
 }

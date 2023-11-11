@@ -1,6 +1,8 @@
 package com.codecool.myfirstsoapservice.controller;
 
 import com.codecool.myfirstsoapservice.service.CountryService;
+import io.spring.guides.gs_producing_web_service.PostCountryRequest;
+import io.spring.guides.gs_producing_web_service.PostCountryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -28,4 +30,15 @@ public class CountryEndpoint {
 
         return response;
     }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "postCountryRequest")
+    @ResponsePayload
+    public PostCountryResponse postCountry(@RequestPayload PostCountryRequest request) {
+        PostCountryResponse response = new PostCountryResponse();
+        countryService.saveCountry(request);
+        response.setResponse("Country saved");
+
+        return response;
+    }
+
 }
